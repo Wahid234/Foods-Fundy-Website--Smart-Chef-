@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+{% load i18n static simpletags %}
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<!--
+   The project use: django-simpleui
+   source code：
+   https://github.com/newpanjing/simpleui
+-->
+<html lang="{{ LANGUAGE_CODE|default:" en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl" {% endif %}>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {% block title %}
+    <title>{{ site_title }}-{% trans 'Register' %}</title>
+    {% endblock %}
+    {% block icon %}
+    {#<link rel="icon" href="{% static 'admin/simpleui-x/img/favicon.png' %}">#}
+    {% endblock %}
+
+    {% include 'admin/includes/css-part.html' %}
+
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'admin/simpleui-x/css/login.css' %}?_=2.1">
+    {% endblock %}
+    {% block bg %}
+    <style type="text/css">
+        .bg {
+            background: #f0f2f5;
+            background-image: url('{% static ' admin/simpleui-x/img/bg.svg' %}');
+            min-height: 100%;
+            background-repeat: no-repeat;
+            background-position: 50%;
+            background-size: 100%;
+            padding: 20px 0;
+            position: relative;
+        }
+    </style>
+    {% endblock %}
+
+    {% block head %}
+    {# You can add code here. #}
+    {% endblock %}
+</head>
+
+<body class="bg">
+    {% block main %}
+    <div class="login-main">
+        {% block logo %}
+        <div class="logo">
+            <span><span class="logo" style="font-size: 40px;color:red;">{% trans 'Smart' %}</span> {% trans 'Chief' %}</span>
+            {% trans 'header' %}
+        </div>
+        {% endblock %}
+
+
+        {% block errors %}
+        {% if form_errors %}
+        {% for error in form_errors %}
+        <el-alert title="{{ error }}" type="error">
+        </el-alert>
+        {% endfor %}
+        {% endif %}
+        {% if form_errors %}
+        <p class="errornote">
+            {% if form_errors|length == 1 %}
+            <el-alert title="{% trans " Please correct the error below." %}" type="error"></el-alert>
+            {% else %}
+            <el-alert title="{% trans " Please correct the errors below." %}" type="error"></el-alert>
+            {% endif %}
+        </p>
+        {% endif %}
+        {% endblock %}
+        {% block form %}
+        <form class="simpleui-form" action="/admin/register/" method="post" id="login-form">
+            {% csrf_token %}
+            <div class="simpleui-input-inline">
+                <label for="">{% trans 'User name' %}</label>
+                <el-input prefix-icon="fas fa-user" v-model="username" name="username"
+                    placeholder="{% trans 'User name' %}" autofocus></el-input>
+            </div>
+            <div class="simpleui-input-inline">
+                <label for="">{% trans 'First name' %}</label>
+                <el-input prefix-icon="fas fa-user" v-model="first_name" name="first_name"
+                    placeholder="{% trans 'First name' %}" autofocus></el-input>
+            </div>
+            <div class="simpleui-input-inline">
+                <label for="">{% trans 'Last name' %}</label>
+                <el-input prefix-icon="fas fa-user" v-model="last_name" name="last_name"
+                    placeholder="{% trans 'Last name' %}" autofocus></el-input>
+            </div>
+            <div class="simpleui-input-inline">
+                <label for="">{% trans 'Email' %}</label>
+                <el-input type="email" prefix-icon="fas fa-envelope" v-model="email" name="email"
+                    placeholder="{% trans 'Email' %}" autofocus></el-input>
+            </div>
+            <div class="simpleui-input-inline">
+                <label for="">{% trans 'Phone' %}</label>
+                <el-input type="text" prefix-icon="fas fa-call" v-model="phone" name="phone"
+                    placeholder="{% trans 'Phone' %}"></el-input>
+            </div>
+            <label for="">{% trans 'Gender' %}</label>
+            <div class="simpleui-input-inline">
+                <el-select prefix-icon="fas fa-call" v-model="gender" name="gender" placeholder="{% trans 'Gender' %}">
+                    <el-option value="male">{% trans 'Male' %}</el-option>
+                    <el-option value="female">{% trans 'Female' %}</el-option>
+                </el-select>
+            </div>
+            <label for="">{% trans 'Health status' %}</label>
+            <div class="simpleui-input-inline">
+                <el-select prefix-icon="fas fa-call" v-model="health_status" name="health_status"
+                    placeholder="{% trans 'Health status' %}">
+                    {% if healths %}
+                    {% for health in healths %}
+                    <el-option value="{{ health.id }}">{{ health.name }}</el-option>
+                    {% endfor %}
+                    {% endif %}
+
+                </el-select>
+            </div>
+
+            <div class="simpleui-input-inline">
+                <label for="">{% trans 'Password' %}</label>
+                <el-input prefix-icon="fas fa-lock" type="password" v-model="password" name="password"
+                    @keyup.enter.native="login()" placeholder="{% trans 'password' %}" show-password></el-input>
+            </div>
+            <div class="simpleui-input-inline">
+                <label for="">{% trans 'Address' %}</label>
+                <el-input type="textarea" prefix-icon="fas fa-call" v-model="address" name="address"
+                    placeholder="{% trans 'Address' %}" rows="3"></el-input>
+            </div>
+            {% url 'admin_password_reset' as password_reset_url %}
+            {% if password_reset_url %}
+
+            <div class="password-reset-link">
+                <a class="forgot-password" href="{{ password_reset_url }}">{% trans 'Forgotten your password or
+                    username?' %}</a>
+            </div>
+            {% endif %}
+            <div class="simpleui-input-inline login-btn">
+                <el-button :icon="loading?'el-icon-loading':''" @click="login()" type="primary">{% trans 'Register' %}</el-button>
+            </div>
+
+            <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+        {% endblock %}
+    </div>
+    {% endblock %}
+    {% include 'admin/includes/js-part.html' %}
+    {% block login_js %}
+    <script>
+        if (parent.callback) {
+            parent.callback();
+        }
+        var loginApp = new Vue({
+            el: '.login-main',
+            data: {
+                username: '',
+                first_name: '',
+                last_name: '',
+                password: '',
+                email: '',
+                phone: '',
+                gender: '',
+                health_status: '',
+                address: '',
+                is_staff: true,
+                is_superuser: false,
+                loading: false
+            },
+            methods: {
+                login: function () {
+                    this.loading = true;
+                    if (this.username === "" || this.password === "") {
+                        this.$message.error("Please enter your username or password!");
+                        this.loading = false;
+                        return;
+                    }
+                    this.$nextTick(function () {
+                        document.getElementById('login-form').submit();
+                    });
+                }
+            }
+        });
+    </script>
+    {% endblock %}
+
+    {% block particles %}
+    {% if 'SIMPLEUI_LOGIN_PARTICLES'|get_config != False %}
+    <!--
+            Close login page particles see link:
+            关闭登录页粒子动画请查看：
+            https://github.com/newpanjing/simpleui/blob/master/QUICK.md#关闭登录页粒子动画
+        -->
+    <style type="text/css">
+        #particles-js {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            z-index: -1;
+        }
+
+        .forgot-password {
+            margin-top: 10px;
+            color: #3a8ee6;
+            text-decoration: none;
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: lighten($teal, 7);
+            }
+        }
+    </style>
+    <!-- particles.js container -->
+    <div id="particles-js"></div>
+    <script type="text/javascript" src="{% static 'admin/simpleui-x/particles/particles.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/simpleui-x/particles/app.js' %}"></script>
+    {% endif %}
+    {% endblock %}
+
+</body>
+
+</html>

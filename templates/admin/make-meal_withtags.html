@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+{% load i18n static simpletags %}
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<!--
+   The project use: django-simpleui
+   source code：
+   https://github.com/newpanjing/simpleui
+-->
+<html lang="{{ LANGUAGE_CODE|default:" en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl" {% endif %}>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {% block title %}
+    <title>{{ site_title }}-{% trans 'make meal' %}</title>
+    {% endblock %}
+    {% block icon %}
+    {#
+    <link rel="icon" href="{% static 'admin/simpleui-x/img/favicon.png' %}">#}
+    {% endblock %}
+
+    {% include 'admin/includes/css-part.html' %}
+
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'admin/simpleui-x/css/login.css' %}?_=2.1">
+    {% endblock %}
+    {% block bg %}
+    <style type="text/css">
+        .bg {
+            background: #f0f2f5;
+            background-image: url('{% static ' admin/simpleui-x/img/bg.svg' %}');
+            min-height: 100%;
+            background-repeat: no-repeat;
+            background-position: 50%;
+            background-size: 100%;
+            padding: 20px 0;
+            position: relative;
+        }
+    </style>
+    {% endblock %}
+
+    {% block head %}
+    {# You can add code here. #}
+    {% endblock %}
+</head>
+
+<body class="bg">
+    {% block main %}
+    <div class="login-main">
+        {% block logo %}
+        <div class="logo">
+            <span><span class="logo" style="font-size: 40px;color:red;">{% trans 'Smart' %}</span> {% trans 'Chief'
+                %}</span>
+            {% trans 'Header' %}
+        </div>
+        {% endblock %}
+
+
+        {% block errors %}
+        {% if form_errors %}
+        {% for error in form_errors %}
+        <el-alert title="{{ error }}" type="error">
+        </el-alert>
+        {% endfor %}
+        {% endif %}
+        {% if form_errors %}
+        <p class="errornote">
+            {% if form_errors|length == 1 %}
+            <el-alert title="{% trans " Please correct the error below." %}" type="error"></el-alert>
+            {% else %}
+            <el-alert title="{% trans " Please correct the errors below." %}" type="error"></el-alert>
+            {% endif %}
+        </p>
+        {% endif %}
+        {% endblock %}
+        {% block form %}
+        <form class="simpleui-form" action="/admin/makeMeal/" method="post" id="login-form">
+            {% csrf_token %}
+            <label for="">{% trans 'Meal type' %}</label>
+            <div class="simpleui-input-inline">
+                <el-select prefix-icon="fas fa-call" name="meal_type" v-model="meal_type"
+                    placeholder="{% trans 'Meal type' %}">
+                    <el-option value="Popular">{% trans 'Popular' %}</el-option>
+                    <el-option value="Arab">{% trans 'Arab' %}</el-option>
+                    <el-option value="Indian">{% trans 'Indian' %}</el-option>
+                </el-select>
+            </div>
+            <label for="">{% trans 'Category type' %}</label>
+            <div class="simpleui-input-inline">
+                <el-select prefix-icon="fas fa-call" name="category_type" v-model="category_type"
+                    placeholder="{% trans 'Category type' %}">
+                    <el-option value="Cozen">{% trans 'Cozen' %}</el-option>
+                    <el-option value="Calender">{% trans 'Calender' %}</el-option>
+                    <el-option value="Healthy">{% trans 'healthy' %}</el-option>
+                </el-select>
+            </div>
+            <label for="">{% trans 'Type' %}</label>
+            <div class="simpleui-input-inline">
+                <el-select prefix-icon="fas fa-call" name="type" v-model="type" placeholder="{% trans 'Type' %}">
+                    <el-option value="Breakfast">{% trans 'Breakfast' %}</el-option>
+                    <el-option value="Lunch">{% trans 'Lunch' %}</el-option>
+                    <el-option value="Dinner">{% trans 'Dinner' %}</el-option>
+                    <el-option value="Candy">{% trans 'Candy' %}</el-option>
+                    <el-option value="Drinks">{% trans 'Drinks' %}</el-option>
+                </el-select>
+            </div>
+            <label for="">{% trans 'Categories' %}</label>
+            <el-input type="hidden" name="categories" id="categories"></el-input>
+            <div class="simpleui-input-inline">
+                <el-select prefix-icon="fas fa-call" v-model="categories" placeholder="{% trans 'Categories' %}"
+                    multiple>
+
+                    {% if categories %}
+
+                    {% for category in categories %}
+                    <el-option value="{{ category.id }}"><img src="{{ category.image.url }}" width="30" height="30"> {{
+                        category.name }}</el-option>
+                    {% endfor %}
+
+                    {% endif %}
+
+                </el-select>
+            </div>
+            <label for="">{% trans 'Ingredients' %}</label>
+            <el-input type="hidden" name="ingredients" id="ingredients"></el-input>
+            <div class="simpleui-input-inline">
+                <el-select prefix-icon="fas fa-call" v-model="ingredients" placeholder="{% trans 'Ingredients' %}"
+                    multiple>
+
+                    {% if ingredients %}
+
+                    {% for ingredient in ingredients %}
+                    <el-option value="{{ ingredient.id }}"><img src="{{ ingredient.image.url }}" width="30" height="30">
+                        {{ ingredient.name }}</el-option>
+                    {% endfor %}
+
+                    {% endif %}
+
+                </el-select>
+            </div>
+            <label for="">{% trans 'Tags' %}</label>
+            <el-input type="hidden" name="tags" id="tags"></el-input>
+            <div class="simpleui-input-inline">
+                <el-select prefix-icon="fas fa-call" v-model="tags" placeholder="{% trans 'Tags' %}" multiple>
+
+                    {% if tags %}
+
+                    {% for tag in tags %}
+                    <el-option value="{{ tag.id }}">{{ tag.name }}</el-option>
+                    {% endfor %}
+
+                    {% endif %}
+
+                </el-select>
+            </div>
+            <div class="simpleui-input-inline login-btn">
+                <el-button :icon="loading?'el-icon-loading':''" @click="login()" type="primary">{% trans 'Save'
+                    %}</el-button>
+            </div>
+
+            <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+        {% endblock %}
+    </div>
+    {% endblock %}
+    {% include 'admin/includes/js-part.html' %}
+    {% block login_js %}
+    <script>
+        if (parent.callback) {
+            parent.callback();
+        }
+        var loginApp = new Vue({
+            el: '.login-main',
+            data: {
+                meal_type: '',
+                category_type: '',
+                type: '',
+                categories: [],
+                tags: [],
+                ingredients: [],
+                loading: false
+            },
+            methods: {
+                login: function () {
+                    this.loading = true;
+                    this.$nextTick(function () {
+                        this.categories = this.categories;
+                        this.ingredients = this.ingredients;
+                        this.tags = this.tags;
+                        document.getElementById('categories').value = this.categories;
+                        document.getElementById('ingredients').value = this.ingredients;
+                        document.getElementById('tags').value = this.tags;
+                        document.getElementById('login-form').submit();
+                    });
+                }
+            }
+        });
+    </script>
+    {% endblock %}
+
+    {% block particles %}
+    {% if 'SIMPLEUI_LOGIN_PARTICLES'|get_config != False %}
+    <!--
+            Close login page particles see link:
+            关闭登录页粒子动画请查看：
+            https://github.com/newpanjing/simpleui/blob/master/QUICK.md#关闭登录页粒子动画
+        -->
+    <style type="text/css">
+        #particles-js {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            z-index: -1;
+
+        }
+
+        .forgot-password {
+            margin-top: 10px;
+            color: #3a8ee6;
+            text-decoration: none;
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: lighten($teal, 7);
+            }
+        }
+    </style>
+    <!-- particles.js container -->
+    <div id="particles-js"></div>
+    <script type="text/javascript" src="{% static 'admin/simpleui-x/particles/particles.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/simpleui-x/particles/app.js' %}"></script>
+    {% endif %}
+    {% endblock %}
+
+</body>
+
+</html>

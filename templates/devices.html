@@ -1,0 +1,82 @@
+{% extends 'parts/base.html' %}
+{% load static %}
+{% block content %}
+
+	<section class="hero-wrap hero-wrap-2" style="background-image: url('{{ media_url }}images/bg_5.jpg');"
+		data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row no-gutters slider-text align-items-end justify-content-center">
+				<div class="col-md-9 ftco-animate text-center mb-5">
+					<h1 class="mb-2 bread">Devices</h1>
+					<p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i
+									class="fa fa-chevron-right"></i></a></span> <span>Devices <i
+								class="fa fa-chevron-right"></i></span></p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="ftco-section ftco-wrap-about ftco-no-pb ftco-no-pt">
+		<style>
+			label {
+				color: white !important;
+			}
+
+			.option-form {
+				color: white !important;
+			}
+		</style>
+		<div class="container">
+			<div class="row no-gutters">
+				<div class="col-sm-12 p-4 p-md-5 d-flex align-items-center justify-content-center bg-primary">
+					<form action="result.html" class="appointment-form">
+						<h3 class="mb-3">Devices</h3>
+						<div class="row justify-content-center">
+							<div class="col-md-3">
+								<div class="form-group option-form">
+									<input type="checkbox"><img src="{{ media_url }}images/breakfast-3.jpg" width="40" /> Device
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group option-form">
+									<input type="checkbox"><img src="{{ media_url }}images/breakfast-3.jpg" width="40" /> Device2
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group option-form">
+									<input type="checkbox"><img src="{{ media_url }}images/breakfast-3.jpg" width="40" /> Device3
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group option-form">
+									<input type="checkbox"><img src="{{ media_url }}images/breakfast-3.jpg" width="40" /> Device4
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group option-form">
+									<input type="checkbox"><img src="{{ media_url }}images/breakfast-3.jpg" width="40" /> Device5
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group option-form">
+									<input type="checkbox"><img src="{{ media_url }}images/breakfast-3.jpg" width="40" /> Device6
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<input type="submit" value="Submit" class="btn btn-white py-3 px-4">
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- عند الضغط ع زر prepared ينقله الى صفحه result.html -->
+	<!-- عند الضغط ع زر prepared ينقله الى صفحه result.html -->
+	<!-- عند الضغط ع زر prepared ينقله الى صفحه result.html -->
+	<!-- عند الضغط ع زر prepared ينقله الى صفحه result.html -->
+
+	{% endblock content %}

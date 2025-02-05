@@ -1,0 +1,188 @@
+{% extends 'parts/base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url('{{ media_url }}images/bg_5.jpg');"
+	data-stellar-background-ratio="0.5">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row no-gutters slider-text align-items-end justify-content-center">
+			<div class="col-md-9 ftco-animate text-center mb-5">
+				<h1 class="mb-2 bread">Cozens</h1>
+				<p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i
+								class="fa fa-chevron-right"></i></a></span> <span>Cozens<i
+							class="fa fa-chevron-right"></i></span></p>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<section class="ftco-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-lg-4">
+				<div class="menu-wrap">
+					<div class="heading-menu text-center ftco-animate">
+
+						{% if request.user %}
+
+						{% if request.user.id %}
+						<a href="/admin/makeMeal/Cozen/Popular/" class="float-right read btn btn-warning"
+							style="font-size:12px !important;">Prepare meal</a>
+						{% endif %}
+
+						{% endif %}
+
+						<h3>Popular</h3>
+					</div>
+
+					{% if populars %}
+
+					{% for meal in populars %}
+					<div class="menus d-flex ftco-animate">
+						<div class="menu-img img"
+							style="background-image: url('{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}');">
+						</div>
+						<div class="text">
+							<div class="d-flex">
+								<div class="one-half">
+									<h3><a href="/mealDetails/{{ meal.id }}">{{ meal.name }}</a></h3>
+								</div>
+								<div class="one-forth">
+									<span class="price">{{ meal.type }}</span>
+								</div>
+							</div>
+							<p>
+
+								{% if meal.ingredients %}
+
+								{% for ingredient in meal.ingredients.all %}
+								<span>{{ ingredient.name }}</span>,
+								{% endfor %}
+
+								{% endif %}
+							</p>
+						</div>
+					</div>
+					{% endfor %}
+
+					{% endif %}
+					<a href="/meals/Cozen/Popular/" class="float-left read btn btn-primary">More</a>
+					<span class="flat flaticon-bread" style="left: 0;"></span>
+					<span class="flat flaticon-breakfast" style="right: 0;"></span>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-lg-4">
+				<div class="menu-wrap">
+					<div class="heading-menu text-center ftco-animate">
+
+						{% if request.user %}
+
+						{% if request.user.id %}
+						<a href="/admin/makeMeal/Cozen/Arab/" class="float-right read btn btn-warning"
+							style="font-size:12px !important;">Prepare meal</a>
+						{% endif %}
+
+						{% endif %}
+
+						<h3>Arab</h3>
+					</div>
+					{% if arabs %}
+
+					{% for meal in arabs %}
+					<div class="menus d-flex ftco-animate">
+						<div class="menu-img img"
+							style="background-image: url('{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}');">
+						</div>
+						<div class="text">
+							<div class="d-flex">
+								<div class="one-half">
+									<h3><a href="/mealDetails/{{ meal.id }}">{{ meal.name }}</a></h3>
+								</div>
+								<div class="one-forth">
+									<span class="price">{{ meal.type }}</span>
+								</div>
+							</div>
+							<p>
+
+								{% if meal.ingredients %}
+
+								{% for ingredient in meal.ingredients.all %}
+								<span>{{ ingredient.name }}</span>,
+								{% endfor %}
+
+								{% endif %}
+							</p>
+						</div>
+					</div>
+					{% endfor %}
+
+					{% endif %}
+					<a href="/meals/Cozen/Arab/" class="float-left read btn btn-primary">More</a>
+					<span class="flat flaticon-pizza" style="left: 0;"></span>
+					<span class="flat flaticon-chicken" style="right: 0;"></span>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-lg-4">
+				<div class="menu-wrap">
+					<div class="heading-menu text-center ftco-animate">
+
+						{% if request.user %}
+
+						{% if request.user.id %}
+						<a href="/admin/makeMeal/Cozen/Indian/" class="float-right read btn btn-warning"
+							style="font-size:12px !important;">Prepare meal</a>
+						{% endif %}
+
+						{% endif %}
+
+						<h3>Indian</h3>
+					</div>
+					{% if indians %}
+
+					{% for meal in indians %}
+					<div class="menus d-flex ftco-animate">
+						<div class="menu-img img"
+							style="background-image: url('{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}');">
+						</div>
+						<div class="text">
+							<div class="d-flex">
+								<div class="one-half">
+									<h3><a href="/mealDetails/{{ meal.id }}">{{ meal.name }}</a></h3>
+								</div>
+								<div class="one-forth">
+									<span class="price">{{ meal.type }}</span>
+								</div>
+							</div>
+							<p>
+
+								{% if meal.ingredients %}
+
+								{% for ingredient in meal.ingredients.all %}
+								<span>{{ ingredient.name }}</span>,
+								{% endfor %}
+
+								{% endif %}
+							</p>
+						</div>
+					</div>
+					{% endfor %}
+
+					{% endif %}
+					<a href="/meals/Cozen/Indian/" class="float-left read btn btn-primary">More</a>
+					<span class="flat flaticon-omelette" style="left: 0;"></span>
+					<span class="flat flaticon-burger" style="right: 0;"></span>
+				</div>
+			</div>
+
+			<!--  -->
+		</div>
+	</div>
+
+</section>
+
+
+{% endblock content %}

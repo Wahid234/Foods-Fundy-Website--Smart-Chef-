@@ -1,0 +1,668 @@
+{% extends 'parts/base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="hero-wrap">
+	<div class="home-slider owl-carousel js-fullheight">
+		<div class="slider-item js-fullheight" style="background-image:url('{{ media_url }}images/bg_1.jpg');">
+			<div class="overlay"></div>
+			<div class="container">
+				<div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center">
+					<div class="col-md-12 ftco-animate">
+						<div class="text w-100 mt-5 text-center">
+							<span class="subheading">Smart Chef</h2></span>
+							<h1>Cooking Since</h1>
+							<span class="subheading-2">2024</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="slider-item js-fullheight" style="background-image:url('{{ media_url }}images/bg_2.jpg');">
+			<div class="overlay"></div>
+			<div class="container">
+				<div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center">
+					<div class="col-md-12 ftco-animate">
+						<div class="text w-100 mt-5 text-center">
+							<span class="subheading">Smart Chef</h2></span>
+							<h1>Best Quality</h1>
+							<span class="subheading-2 sub">Food</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- <section class="ftco-section bg-light">
+	<div class="container">
+		<div class="row justify-content-center mb-5 pb-2">
+			<div class="col-md-7 text-center heading-section ftco-animate">
+				<span class="subheading">Categories</span>
+				<h2 class="mb-4">Categories</h2>
+			</div>
+		</div>
+		<div class="row">
+
+			{% if categories %}
+
+			{% for category in categories|slice:"3" %}
+			<div class="col-md-4 ftco-animate">
+				<div class="blog-entry">
+					<a class="block-20"
+						style="background-image: url('{% if category.image and category.image.url %}{{ category.image.url }}{% endif %}');">
+					</a>
+					<div class="text px-4 pt-3 pb-4">
+						<div class="meta">
+							<div><a href="#">{{ category.created_date }}</a></div>
+							<div><a href="#">{{ category.name }}</a></div>
+						</div>
+						<p class="clearfix">
+							<a href="#" class="float-right meta-chat">
+								{{ category.type }}</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+
+			{% endif %}
+			<a href="/categories/" class="float-left read btn btn-primary">Read more</a>
+		</div>
+</section> -->
+
+
+<section class="ftco-section">
+	<div class="container">
+		<div class="row justify-content-center mb-5 pb-2">
+			<div class="col-md-7 text-center heading-section ftco-animate">
+				<span class="subheading">Cozen</span>
+				<h2 class="mb-4">Cozen</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 col-lg-4">
+				<div class="menu-wrap">
+					<div class="heading-menu text-center ftco-animate">
+
+						{% if request.user %}
+
+						{% if request.user.id %}
+						<a href="/admin/makeMeal/Cozen/Popular/" class="float-right read btn btn-warning"
+							style="font-size:12px !important;">Prepare meal</a>
+						{% endif %}
+
+						{% endif %}
+
+						<h3>Popular</h3>
+					</div>
+
+					{% if populars %}
+
+					{% for meal in populars|slice:5 %}
+					<div class="menus d-flex ftco-animate">
+						<div class="menu-img img"
+							style="background-image: url('{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}');">
+						</div>
+						<div class="text">
+							<div class="d-flex">
+								<div class="one-half">
+									<h3><a href="/mealDetails/{{ meal.id }}">{{ meal.name }}</a></h3>
+								</div>
+								<div class="one-forth">
+									<span class="price">{{ meal.type }}</span>
+								</div>
+							</div>
+							<p>
+
+								{% if meal.ingredients %}
+
+								{% for ingredient in meal.ingredients.all %}
+								<span>{{ ingredient.name }}</span>,
+								{% endfor %}
+
+								{% endif %}
+							</p>
+						</div>
+					</div>
+					{% endfor %}
+
+					{% endif %}
+					<a href="/meals/Cozen/Popular/" class="float-left read btn btn-primary">More</a>
+					<span class="flat flaticon-bread" style="left: 0;"></span>
+					<span class="flat flaticon-breakfast" style="right: 0;"></span>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-lg-4">
+				<div class="menu-wrap">
+					<div class="heading-menu text-center ftco-animate">
+
+						{% if request.user %}
+
+						{% if request.user.id %}
+						<a href="/admin/makeMeal/Cozen/Arab/" class="float-right read btn btn-warning"
+							style="font-size:12px !important;">Prepare meal</a>
+						{% endif %}
+
+						{% endif %}
+
+						<h3>Arab</h3>
+					</div>
+					{% if arabs %}
+
+					{% for meal in arabs|slice:5 %}
+					<div class="menus d-flex ftco-animate">
+						<div class="menu-img img"
+							style="background-image: url('{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}');">
+						</div>
+						<div class="text">
+							<div class="d-flex">
+								<div class="one-half">
+									<h3><a href="/mealDetails/{{ meal.id }}">{{ meal.name }}</a></h3>
+								</div>
+								<div class="one-forth">
+									<span class="price">{{ meal.type }}</span>
+								</div>
+							</div>
+							<p>
+
+								{% if meal.ingredients %}
+
+								{% for ingredient in meal.ingredients.all %}
+								<span>{{ ingredient.name }}</span>,
+								{% endfor %}
+
+								{% endif %}
+							</p>
+						</div>
+					</div>
+					{% endfor %}
+
+					{% endif %}
+					<a href="/meals/Cozen/Arab/" class="float-left read btn btn-primary">More</a>
+					<span class="flat flaticon-pizza" style="left: 0;"></span>
+					<span class="flat flaticon-chicken" style="right: 0;"></span>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-lg-4">
+				<div class="menu-wrap">
+					<div class="heading-menu text-center ftco-animate">
+
+						{% if request.user %}
+
+						{% if request.user.id %}
+						<a href="/admin/makeMeal/Cozen/Indian/" class="float-right read btn btn-warning"
+							style="font-size:12px !important;">Prepare meal</a>
+						{% endif %}
+
+						{% endif %}
+
+						<h3>Indian</h3>
+					</div>
+					{% if indians %}
+
+					{% for meal in indians|slice:5 %}
+					<div class="menus d-flex ftco-animate">
+						<div class="menu-img img"
+							style="background-image: url('{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}');">
+						</div>
+						<div class="text">
+							<div class="d-flex">
+								<div class="one-half">
+									<h3><a href="/mealDetails/{{ meal.id }}">{{ meal.name }}</a></h3>
+								</div>
+								<div class="one-forth">
+									<span class="price">{{ meal.type }}</span>
+								</div>
+							</div>
+							<p>
+
+								{% if meal.ingredients %}
+
+								{% for ingredient in meal.ingredients.all %}
+								<span>{{ ingredient.name }}</span>,
+								{% endfor %}
+
+								{% endif %}
+							</p>
+						</div>
+					</div>
+					{% endfor %}
+
+					{% endif %}
+					<a href="/meals/Cozen/Indian/" class="float-left read btn btn-primary">More</a>
+					<span class="flat flaticon-omelette" style="left: 0;"></span>
+					<span class="flat flaticon-burger" style="right: 0;"></span>
+				</div>
+			</div>
+
+			<!--  -->
+		</div>
+	</div>
+
+</section>
+
+<section class="ftco-section">
+	<div class="container">
+		<div class="row justify-content-center mb-5 pb-2">
+			<div class="col-md-7 text-center heading-section ftco-animate">
+				<span class="subheading">Calenders</span>
+				<h2 class="mb-4">Calenders</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 col-lg-4">
+				<div class="menu-wrap">
+					<div class="heading-menu text-center ftco-animate">
+						{% if request.user %}
+
+						{% if request.user.id %}
+						<a href="/admin/makeMeal/Calender/Breakfast/" class="float-right read btn btn-warning"
+							style="font-size:12px !important;">Prepare meal</a>
+						{% endif %}
+
+						{% endif %}
+						<h3>Breakfast</h3>
+					</div>
+					{% if breakfasts %}
+
+					{% for meal in breakfasts|slice:5 %}
+					<div class="menus d-flex ftco-animate">
+						<div class="menu-img img"
+							style="background-image: url('{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}');">
+						</div>
+						<div class="text">
+							<div class="d-flex">
+								<div class="one-half">
+									<h3><a href="/mealDetails/{{ meal.id }}">{{ meal.name }}</a></h3>
+								</div>
+								<div class="one-forth">
+									<span class="price">{{ meal.meal_type }}</span>
+								</div>
+							</div>
+							<p>
+
+								{% if meal.ingredients %}
+
+								{% for ingredient in meal.ingredients.all %}
+								<span>{{ ingredient.name }}</span>,
+								{% endfor %}
+
+								{% endif %}
+							</p>
+						</div>
+					</div>
+					{% endfor %}
+
+					{% endif %}
+					<a href="/meals/Calender/Breakfast/" class="float-left read btn btn-primary">More</a>
+					<span class="flat flaticon-bread" style="left: 0;"></span>
+					<span class="flat flaticon-breakfast" style="right: 0;"></span>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-lg-4">
+				<div class="menu-wrap">
+					<div class="heading-menu text-center ftco-animate">
+						{% if request.user %}
+
+						{% if request.user.id %}
+						<a href="/admin/makeMeal/Calender/Lunch/" class="float-right read btn btn-warning"
+							style="font-size:12px !important;">Prepare meal</a>
+						{% endif %}
+
+						{% endif %}
+						<h3>Lunch</h3>
+					</div>
+
+					{% if lunches %}
+					{% for meal in lunches|slice:5 %}
+					<div class="menus d-flex ftco-animate">
+						<div class="menu-img img"
+							style="background-image: url('{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}');">
+						</div>
+						<div class="text">
+							<div class="d-flex">
+								<div class="one-half">
+									<h3><a href="/mealDetails/{{ meal.id }}">{{ meal.name }}</a></h3>
+								</div>
+								<div class="one-forth">
+									<span class="price">{{ meal.meal_type }}</span>
+								</div>
+							</div>
+							<p>
+
+								{% if meal.ingredients %}
+
+								{% for ingredient in meal.ingredients.all %}
+								<span>{{ ingredient.name }}</span>,
+								{% endfor %}
+
+								{% endif %}
+							</p>
+						</div>
+					</div>
+					{% endfor %}
+
+					{% endif %}
+					<a href="/meals/Calender/Lunch/" class="float-left read btn btn-primary">More</a>
+					<span class="flat flaticon-pizza" style="left: 0;"></span>
+					<span class="flat flaticon-chicken" style="right: 0;"></span>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-lg-4">
+				<div class="menu-wrap">
+					<div class="heading-menu text-center ftco-animate">
+						{% if request.user %}
+
+						{% if request.user.id %}
+						<a href="/admin/makeMeal/Calender/Dinner/" class="float-right read btn btn-warning"
+							style="font-size:12px !important;">Prepare meal</a>
+						{% endif %}
+
+						{% endif %}
+						<h3>Dinner</h3>
+					</div>
+					{% if dinners %}
+					{% for meal in dinners|slice:5 %}
+					<div class="menus d-flex ftco-animate">
+						<div class="menu-img img"
+							style="background-image: url('{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}');">
+						</div>
+						<div class="text">
+							<div class="d-flex">
+								<div class="one-half">
+									<h3><a href="/mealDetails/{{ meal.id }}">{{ meal.name }}</a></h3>
+								</div>
+								<div class="one-forth">
+									<span class="price">{{ meal.meal_type }}</span>
+								</div>
+							</div>
+							<p>
+
+								{% if meal.ingredients %}
+
+								{% for ingredient in meal.ingredients.all %}
+								<span>{{ ingredient.name }}</span>,
+								{% endfor %}
+
+								{% endif %}
+
+							</p>
+						</div>
+					</div>
+					{% endfor %}
+
+					{% endif %}
+					<a href="/meals/Calender/Dinner/" class="float-left read btn btn-primary">More</a>
+					<span class="flat flaticon-omelette" style="left: 0;"></span>
+					<span class="flat flaticon-burger" style="right: 0;"></span>
+				</div>
+			</div>
+
+			<!--  -->
+			<div class="col-md-6 col-lg-4">
+				<div class="menu-wrap">
+					<div class="heading-menu text-center ftco-animate">
+						{% if request.user %}
+
+						{% if request.user.id %}
+						<a href="/admin/makeMeal/Calender/Candy/" class="float-right read btn btn-warning"
+							style="font-size:12px !important;">Prepare meal</a>
+						{% endif %}
+
+						{% endif %}
+						<h3>Candy</h3>
+					</div>
+					{% if candies %}
+					{% for meal in candies|slice:5 %}
+					<div class="menus d-flex ftco-animate">
+						<div class="menu-img img"
+							style="background-image: url('{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}');">
+						</div>
+						<div class="text">
+							<div class="d-flex">
+								<div class="one-half">
+									<h3><a href="/mealDetails/{{ meal.id }}">{{ meal.name }}</a></h3>
+								</div>
+								<div class="one-forth">
+									<span class="price">{{ meal.meal_type }}</span>
+								</div>
+							</div>
+							<p>
+
+								{% if meal.ingredients %}
+
+								{% for ingredient in meal.ingredients.all %}
+								<span>{{ ingredient.name }}</span>,
+								{% endfor %}
+
+								{% endif %}
+
+							</p>
+						</div>
+					</div>
+					{% endfor %}
+
+					{% endif %}
+					<a href="/meals/Calender/Candy/" class="float-left read btn btn-primary">More</a>
+					<span class="flat flaticon-cupcake" style="left: 0;"></span>
+					<span class="flat flaticon-ice-cream" style="right: 0;"></span>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-lg-4">
+				<div class="menu-wrap">
+					<div class="heading-menu text-center ftco-animate fadeInUp ftco-animated">
+						{% if request.user %}
+
+						{% if request.user.id %}
+						<a href="/admin/makeMeal/Calender/Drinks/" class="float-right read btn btn-warning"
+							style="font-size:12px !important;">Prepare meal</a>
+						{% endif %}
+
+						{% endif %}
+						<h3>Drinks</h3>
+					</div>
+					{% if drinks %}
+					{% for meal in drinks|slice:5 %}
+					<div class="menus d-flex ftco-animate">
+						<div class="menu-img img"
+							style="background-image: url('{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}');">
+						</div>
+						<div class="text">
+							<div class="d-flex">
+								<div class="one-half">
+									<h3><a href="/mealDetails/{{ meal.id }}">{{ meal.name }}</a></h3>
+								</div>
+								<div class="one-forth">
+									<span class="price">{{ meal.meal_type }}</span>
+								</div>
+							</div>
+							<p>
+
+								{% if meal.ingredients %}
+
+								{% for ingredient in meal.ingredients.all %}
+								<span>{{ ingredient.name }}</span>,
+								{% endfor %}
+
+								{% endif %}
+
+							</p>
+						</div>
+					</div>
+					{% endfor %}
+
+					{% endif %}
+					<a href="/meals/Calender/Drinks/" class="float-left read btn btn-primary">More</a>
+					<span class="flat flaticon-wine" style="left: 0;"></span>
+					<span class="flat flaticon-wine-1" style="right: 0;"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>
+
+<section class="ftco-section testimony-section" style="background-image: url('{{ media_url }}images/bg_5.jpg');">
+	<style>
+		.makemake_meal {
+			background-color: #fff;
+			padding: 40px;
+		}
+	</style>
+	<div class="container">
+		<div class="row d-flex">
+			<div class="col-md-6 d-flex">
+				<div class="img img-2 w-100 mr-md-2" style="background-image: url('{{ media_url }}images/bg_6.jpg');">
+				</div>
+				<div class="img img-2 w-100 ml-md-2" style="background-image: url('{{ media_url }}images/bg_4.jpg');">
+				</div>
+			</div>
+			<div class="col-md-6 ftco-animate makemake_meal p-4 p-md-5">
+				<div class="heading-section ftco-animate mb-5">
+					<span class="subheading">This is our secrets</span>
+					<h2 class="mb-4">Perfect Ingredients</h2>
+					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+						there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the
+						Semantics, a large language ocean.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="ftco-section bg-light">
+	<div class="container">
+		<div class="row justify-content-center mb-5 pb-2">
+			<div class="col-md-7 text-center heading-section ftco-animate">
+				<span class="subheading">Healthy</span>
+				<h2 class="mb-4">Healthy</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 col-lg-6">
+				<div class="menu-wrap">
+					<div class="heading-menu text-center ftco-animate">
+
+						{% if request.user %}
+
+						{% if request.user.id %}
+						<a href="/admin/makeMeal/Healthy/DIET/" class="float-right read btn btn-warning"
+							style="font-size:12px !important;">Prepare meal</a>
+						{% endif %}
+
+						{% endif %}
+
+						<h3>DIET</h3>
+					</div>
+
+					{% if diets %}
+
+					{% for meal in diets|slice:5 %}
+					<div class="menus d-flex ftco-animate">
+						<div class="menu-img img"
+							style="background-image: url('{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}');">
+						</div>
+						<div class="text">
+							<div class="d-flex">
+								<div class="one-half">
+									<h3><a href="/mealDetails/{{ meal.id }}">{{ meal.name }}</a></h3>
+								</div>
+								<div class="one-forth">
+									<span class="price">{{ meal.meal_type }}<br/>{{ meal.type }}</span>
+								</div>
+							</div>
+							<p>
+
+								{% if meal.ingredients %}
+
+								{% for ingredient in meal.ingredients.all %}
+								<span>{{ ingredient.name }}</span>,
+								{% endfor %}
+
+								{% endif %}
+							</p>
+						</div>
+					</div>
+					{% endfor %}
+
+					{% endif %}
+					<a href="/meals/Healthy/DIET/" class="float-left read btn btn-primary">More</a>
+					<span class="flat flaticon-bread" style="left: 0;"></span>
+					<span class="flat flaticon-breakfast" style="right: 0;"></span>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-lg-6">
+				<div class="menu-wrap">
+					<div class="heading-menu text-center ftco-animate">
+
+						{% if request.user %}
+
+						{% if request.user.id %}
+						<a href="/admin/makeMeal/Healthy/KETO/" class="float-right read btn btn-warning"
+							style="font-size:12px !important;">Prepare meal</a>
+						{% endif %}
+
+						{% endif %}
+
+						<h3>KETO</h3>
+					</div>
+					{% if ketos %}
+
+					{% for meal in ketos|slice:5 %}
+					<div class="menus d-flex ftco-animate">
+						<div class="menu-img img"
+							style="background-image: url('{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}');">
+						</div>
+						<div class="text">
+							<div class="d-flex">
+								<div class="one-half">
+									<h3><a href="/mealDetails/{{ meal.id }}">{{ meal.name }}</a></h3>
+								</div>
+								<div class="one-forth">
+									<span class="price">{{ meal.meal_type }}<br/>{{ meal.type }}</span>
+								</div>
+							</div>
+							<p>
+
+								{% if meal.ingredients %}
+
+								{% for ingredient in meal.ingredients.all %}
+								<span>{{ ingredient.name }}</span>,
+								{% endfor %}
+
+								{% endif %}
+							</p>
+						</div>
+					</div>
+					{% endfor %}
+
+					{% endif %}
+					<a href="/meals/Healthy/KETO/" class="float-left read btn btn-primary">More</a>
+					<span class="flat flaticon-pizza" style="left: 0;"></span>
+					<span class="flat flaticon-chicken" style="right: 0;"></span>
+				</div>
+			</div>
+
+			<!--  -->
+		</div>
+</section>
+<section class="ftco-section ftco-no-pt ftco-no-pb ftco-intro bg-primary">
+	<div class="container py-5">
+		<div class="row py-2">
+			<div class="col-md-12 text-center">
+				<h2> Make Delicious &amp; Nutritious Food</h2>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock content %}

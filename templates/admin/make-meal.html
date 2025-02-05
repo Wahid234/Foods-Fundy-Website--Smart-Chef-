@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+{% load i18n static simpletags %}
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<!--
+   The project use: django-simpleui
+   source code：
+   https://github.com/newpanjing/simpleui
+-->
+<html lang="{{ LANGUAGE_CODE|default:" en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl" {% endif %}>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {% block title %}
+    <title>{{ site_title }}-{% trans 'make meal' %}</title>
+    {% endblock %}
+    {% block icon %}
+    {# <link rel="icon" href="{% static 'admin/simpleui-x/img/favicon.png' %}">#}
+    {% endblock %}
+
+    {% include 'admin/includes/css-part.html' %}
+
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'admin/simpleui-x/css/login.css' %}?_=2.1">
+    {% endblock %}
+    {% block bg %}
+    <style type="text/css">
+        .bg {
+            background: #f0f2f5;
+            background-image: url('{% static 'admin/simpleui-x/img/bg.svg' %}');
+            min-height: 100%;
+            background-repeat: no-repeat;
+            background-position: 50%;
+            background-size: 100%;
+            padding: 20px 0;
+            position: relative;
+        }
+    </style>
+    {% endblock %}
+
+    {% block head %}
+    {# You can add code here. #}
+    {% endblock %}
+</head>
+
+<body class="bg">
+    {% block main %}
+    <div class="login-main" style="max-width:none;margin-left:10%;margin-right:10%;padding-top:unset;">
+        {% block logo %}
+        <div class="logo">
+            <span><span class="logo" style="font-size: 40px;color:red;">{% trans 'Smart' %}</span> {% trans 'Chief' %}</span>
+            {% trans 'Header' %}
+        </div>
+        {% endblock %}
+
+
+        {% block errors %}
+        {% if form_errors %}
+        {% for error in form_errors %}
+        <el-alert title="{{ error }}" type="error">
+        </el-alert>
+        {% endfor %}
+        {% endif %}
+        {% if form_errors %}
+        <p class="errornote">
+            {% if form_errors|length == 1 %}
+            <el-alert title="{% trans "Please correct the error below." %}" type="error"></el-alert>
+            {% else %}
+            <el-alert title="{% trans "Please correct the errors below." %}" type="error"></el-alert>
+            {% endif %}
+        </p>
+        {% endif %}
+        {% endblock %}
+        {% block form %}
+        <form class="simpleui-form" action="/admin/makeMeal/{{ categoryType }}/{{ type }}/" method="post"
+            id="login-form">
+            {% csrf_token %}
+            <el-input type="hidden" name="category_type" id="category_type" value="{{ categoryType }}"></el-input>
+            <el-input type="hidden" name="type" id="type" value="{{ type }}"></el-input>
+                <div >
+                    <h4 style="text-align: center;" for="">{% trans 'Categories' %}</h4><br/>
+                    <div style="height: 300px;overflow:scroll;overflow-x:hidden;">
+                        {% if categories %}
+            
+                        {% for category in categories %}
+                        <div class="card" id="image-select-menu">
+                    <div class="card-body" for="cat-{{ category.id }}">
+                        <img onclick="check('cat-{{ category.id }}');" class="card-img-top"
+                            src="{% if category.image and category.image.url %}{{ category.image.url }}{% endif %}"
+                            alt="{{ category.name }}" style="width: 200px; height: 160px;">
+                        <div class="card-title">
+                            <span style="display: block; margin-top: auto; margin-bottom: auto;"><input type="checkbox" class=""
+                                    name="categories" style="margin-top: auto; margin-bottom: auto;" onclick="check2('cat-{{ category.id }}');" id="cat-{{ category.id }}"
+                                    value="{{ category.id }}"> <span onclick="check('cat-{{ category.id }}');">{{ category.name }}</span></span>
+                        </div>
+                    </div>
+                </div>
+                        
+                        {% endfor %}
+            
+                        {% endif %}
+            
+                    </div>
+                    <br/>
+                </div>
+                <div>
+                    <h4 style="text-align: center;" for="">{% trans 'Ingredients' %}</h4><br/>
+                    <div style="height: 300px;overflow:scroll;overflow-x:hidden;">
+                        {% if ingredients %}
+            
+                        {% for ingredient in ingredients %}
+                        <div class="card {% if ingredient.categories %}{% for cat in ingredient.categories.all %}cat-{{ cat.id }} {% endfor %}{% endif %}" style="display:none;" id="image-select-menu"
+                        >
+                        <div class="card-body" for="ing-{{ ingredient.id }}">
+                            <img onclick="check('ing-{{ ingredient.id }}');" class="card-img-top"
+                                src="{% if ingredient.image and ingredient.image.url %}{{ ingredient.image.url }}{% endif %}"
+                                alt="{{ ingredient.name }}" style="width: 200px; height: 160px;">
+                            <div class="card-title">
+                                <span style="display: block; margin-top: auto; margin-bottom: auto;"><input type="checkbox" class=""
+                                        name="ingredients" style="margin-top: auto; margin-bottom: auto;" id="ing-{{ ingredient.id }}"
+                                        value="{{ ingredient.id }}"> <span onclick="check('ing-{{ ingredient.id }}');">{{ ingredient.name }}</span></span>
+                            </div>
+                        </div>
+                    </div>
+                        {% endfor %}
+            
+                        {% endif %}
+                    </div>
+                </div>
+            <div class="simpleui-input-inline login-btn">
+                <el-button :icon="loading?'el-icon-loading':''" @click="login()" type="primary">{% trans 'Save' %}</el-button>
+            </div>
+
+            <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+        {% endblock %}
+    </div>
+    {% endblock %}
+    {% include 'admin/includes/js-part.html' %}
+    {% block login_js %}
+    <script>
+        function check(item){
+            document.getElementById(item).checked=!document.getElementById(item).checked;
+            if(item.includes("cat-")){
+                var ingredientsDiv = document.getElementsByClassName(item);
+                var categoryCheckbox = document.getElementById(item);
+                // Check if the category checkbox is checked
+                if (categoryCheckbox.checked) {
+                    Array.from(ingredientsDiv).forEach(function(div) {
+                        div.style.display = 'block';
+                    });
+                } else {
+                    Array.from(ingredientsDiv).forEach(function(div) {
+                        div.style.display = 'none';
+                        var checkboxes = div.querySelectorAll('input[type="checkbox"]');
+                        checkboxes.forEach(function(checkbox) {
+                            checkbox.checked = false;
+                        });
+                    });
+                }
+            }
+        }
+        function check2(item){
+            if(item.includes("cat-")){
+                var ingredientsDiv = document.getElementsByClassName(item);
+                var categoryCheckbox = document.getElementById(item);
+                // Check if the category checkbox is checked
+                if (categoryCheckbox.checked) {
+                    Array.from(ingredientsDiv).forEach(function(div) {
+                        div.style.display = 'block';
+                    });
+                } else {
+                    Array.from(ingredientsDiv).forEach(function(div) {
+                        div.style.display = 'none';
+                        var checkboxes = div.querySelectorAll('input[type="checkbox"]');
+                        checkboxes.forEach(function(checkbox) {
+                            checkbox.checked = false;
+                        });
+                    });
+                }
+            }
+        }
+    </script>
+    <script>
+        if (parent.callback) {
+            parent.callback();
+        }
+        var loginApp = new Vue({
+            el: '.login-main',
+            data: {
+                loading: false
+            },
+            methods: {
+                login: function () {
+                    this.loading = true;
+                    this.$nextTick(function () {
+                        document.getElementById('login-form').submit();
+                    });
+                }
+            }
+        });
+    </script>
+    {% endblock %}
+
+    {% block particles %}
+    {% if 'SIMPLEUI_LOGIN_PARTICLES'|get_config != False %}
+    <!--
+            Close login page particles see link:
+            关闭登录页粒子动画请查看：
+            https://github.com/newpanjing/simpleui/blob/master/QUICK.md#关闭登录页粒子动画
+        -->
+    <style type="text/css">
+        #particles-js {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            z-index: -1;
+
+        }
+        .card{
+            width:200px;
+            float: left;
+            margin-right: 10px;
+            padding: 20px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+    </style>
+    <!-- particles.js container -->
+    <div id="particles-js"></div>
+    <script type="text/javascript" src="{% static 'admin/simpleui-x/particles/particles.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/simpleui-x/particles/app.js' %}"></script>
+    {% endif %}
+    {% endblock %}
+
+</body>
+
+</html>

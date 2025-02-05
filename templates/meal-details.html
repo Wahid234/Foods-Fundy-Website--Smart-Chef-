@@ -1,0 +1,105 @@
+{% extends 'parts/base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url('{{ media_url }}images/bg_5.jpg');"
+  data-stellar-background-ratio="0.5">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row no-gutters slider-text align-items-end justify-content-center">
+      <div class="col-md-9 ftco-animate text-center mb-5">
+        <h1 class="mb-2 bread">Meal details</h1>
+        <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="fa fa-chevron-right"></i></a></span> <span
+            class="mr-2"><a href="blog.html">Meals <i class="fa fa-chevron-right"></i></a></span> <span>Meal details <i
+              class="fa fa-chevron-right"></i></span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% if meal %}
+
+<section class="ftco-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 ftco-animate">
+        <h2 class="mb-3">{{ meal.name }}</h2>
+
+        <p>
+          <img src="{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}" style="width:100%;" alt=""
+            class="img-fluid">
+          
+        </p>
+        <div class="tag-widget post-tag-container mb-0 mt-0">
+          <div class="tagcloud">
+            <a class="tag-cloud-link">{% if meal.health_status %}{{ meal.health_status.name }}{% endif %}</a>
+            <a class="tag-cloud-link">{{ meal.category_type }}</a>
+            <a class="tag-cloud-link">{{ meal.meal_type }}</a>
+            <a class="tag-cloud-link">{{ meal.type }}</a>
+            <a class="tag-cloud-link">{{ meal.healthy_type }}</a>
+          </div>
+        </div>
+      </div> <!-- .col-md-8 -->
+      <div class="col-lg-6 ftco-animate">
+        {% if meal.categories %}
+        <div class="tag-widget post-tag-container mb-5 mt-5">
+          <h4>Categories</h4>
+          <div class="tagcloud">
+            {% for category in meal.categories.all %}
+            <a class="tag-cloud-link">{{ category.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        {% if meal.ingredients %}
+        <div class="tag-widget post-tag-container mb-5 mt-5">
+          <h4>Ingredients</h4>
+          <div class="tagcloud">
+            {% for ingredient in meal.ingredients.all %}
+            <a class="tag-cloud-link">{{ ingredient.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        {% if meal.devices %}
+        <div class="tag-widget post-tag-container mb-5 mt-5">
+          <h4>Devices</h4>
+          <div class="tagcloud">
+            {% for device in meal.devices.all %}
+            <a class="tag-cloud-link">{{ device.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </div> <!-- .col-md-8 -->
+    
+    <div class="col-lg-{% if meal.video and meal.video.url %}6{% else %}12{% endif %} ftco-animate">
+      <h4>Description</h4>
+      <p>
+      <pre>{{ meal.description }}</pre>
+      </p>
+      <h4>Notes</h4>
+      <p>
+      <pre>{{ meal.notes }}</pre>
+      </p>
+
+    </div> <!-- .col-md-8 -->
+    <div class="col-lg-{% if meal.video and meal.video.url %}6{% else %}12{% endif %} ftco-animate">
+      {% if meal.video and meal.video.url %}
+            <video width="500" height="300" controls>
+              <source src="{{ meal.video.url }}" type="video/{{ meal.video.url|slice:'-3:' }}">
+              Your browser does not support the video tag.
+            </video>
+          {% endif %}
+    </div>
+  </div><!-- END COL -->
+  </div>
+  </div>
+</section>
+
+{% endif %}
+
+{% endblock content %}

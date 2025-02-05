@@ -1,0 +1,88 @@
+{% extends 'parts/base.html' %}
+{% load static %}
+{% block content %}
+
+	<section class="hero-wrap hero-wrap-2" style="background-image: url('{{ media_url }}images/bg_5.jpg');"
+		data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row no-gutters slider-text align-items-end justify-content-center">
+				<div class="col-md-9 ftco-animate text-center mb-5">
+					<h1 class="mb-2 bread">Account details</h1>
+					<p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i
+									class="fa fa-chevron-right"></i></a></span> <span>Account details <i
+								class="fa fa-chevron-right"></i></span></p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="ftco-section ftco-wrap-about ftco-no-pb ftco-no-pt">
+		<style>
+			label {
+				color: white !important;
+			}
+
+			option {
+				color: red !important;
+			}
+		</style>
+		<div class="container">
+			<div class="row no-gutters">
+				<div class="col-sm-12 p-4 p-md-5 d-flex align-items-center justify-content-center bg-primary">
+					<form action="devices.html" class="appointment-form">
+						<h3 class="mb-3">Insert account data</h3>
+						<div class="row justify-content-center">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="">Health status</label>
+									<select class="form-control" placeholder="Unit of Measurement" name="unit" required>
+										<option value="1">status 1</option>
+										<option value="1">status 2</option>
+										<option value="1">status 3</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="">Trophic system</label>
+									<select class="form-control" placeholder="Unit of Measurement" name="unit" required>
+										<option value="1">trophic 1</option>
+										<option value="2">trophic 2</option>
+										<option value="3">trophic 3</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="">Sensibilities</label>
+									<select class="form-control" placeholder="Unit of Measurement" name="unit" required>
+										<option value="1">ingredient 1</option>
+										<option value="2">ingredient 2</option>
+										<option value="3">ingredient 3</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<input type="submit" value="Submit" class="btn btn-white py-3 px-4">
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<a href="login.html" class="btn py-3 px-4">Already have account? Login now.</a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- عند الضغط ع زر prepared ينقله الى صفحه result.html -->
+	<!-- عند الضغط ع زر prepared ينقله الى صفحه result.html -->
+	<!-- عند الضغط ع زر prepared ينقله الى صفحه result.html -->
+	<!-- عند الضغط ع زر prepared ينقله الى صفحه result.html -->
+
+
+	{% endblock content %}

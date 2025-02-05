@@ -1,0 +1,101 @@
+{% extends 'parts/base.html' %}
+{% load static %}
+{% block content %}
+
+  <section class="hero-wrap hero-wrap-2" style="background-image: url('{{ media_url }}images/bg_5.jpg');"
+    data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-end justify-content-center">
+        <div class="col-md-9 ftco-animate text-center mb-5">
+          <h1 class="mb-2 bread">Meals</h1>
+          <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i
+                  class="fa fa-chevron-right"></i></a></span> <span>Meals <i
+                class="fa fa-chevron-right"></i></span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ftco-section bg-light">
+    <div class="container">
+      <div class="row">
+        {% if meals %}
+    
+          {% for meal in meals %}
+            <div class="col-md-4 ftco-animate">
+              <div class="blog-entry">
+                <div class="text px-4 pt-3 pb-4">
+                  <div class="meta">
+                    <div><a href="/generatedMeals/{{ meal.id }}/">{{ meal.id }}</a></div>
+                  </div>
+                    <div><a href="#">Categories</a></div>
+                  <p class="clearfix">
+                      {% if meal.categories %}
+                      {% for category in meal.categories.all %}
+                        <a href="" class="float-right meta-chat"> {{ category.name }}</a>
+                      {% endfor %}
+                        
+                    {% endif %}
+                     </p>
+                     <div><a href="#">Ingredients</a></div>
+                     <p class="clearfix"> 
+                    {% if meal.ingredients %}
+                      {% for ingredient in meal.ingredients.all %}
+                        <a href="" class="float-right meta-chat"> {{ ingredient.name }}</a>
+                      {% endfor %}
+                        
+                    {% endif %}
+                  </p>
+                  <div><a href="#">Devices</a></div>
+                  <p class="clearfix">
+                    {% if meal.devices %}
+                      
+                      {% for device in meal.devices.all %}
+                        <a href="" class="float-right meta-chat"> {{ device.name }}</a>
+                      {% endfor %}
+                        
+                    {% endif %}
+                  </p>
+                  <div><a href="#">Tags</a></div>
+                  <p class="clearfix">
+                    {% if meal.tags %}
+                      {% for tag in meal.tags.all %}
+                        <a href="" class="float-right meta-chat"> {{ tag.name }}</a>
+                      {% endfor %}
+                        
+                    {% endif %}
+                      
+                  </p>
+                  <p class="clearfix">
+                    <a href="/generatedMeals/{{ meal.id }}/" class="float-left read btn btn-primary">Generated meals</a>
+                    <span class="float-right meta-chat"> {% if meal.type %}{{ meal.type }}{% endif %}</span>
+                    <span class="float-right meta-chat"> {% if meal.meal_type %}{{ meal.meal_type }}{% endif %}</span>
+                    <span class="float-right meta-chat"> {% if meal.healthy_type %}{{ meal.healthy_type }}{% endif %}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+          
+        {% endif %}
+        
+        <!-- <div class="row no-gutters my-5">
+    <div class="col text-center">
+      <div class="block-27">
+        <ul>
+          <li><a href="#">&lt;</a></li>
+          <li class="active"><span>1</span></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li><a href="#">&gt;</a></li>
+        </ul>
+      </div>
+    </div>
+  </div> -->
+      </div>
+  </section>
+
+  {% endblock content %}

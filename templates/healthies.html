@@ -1,0 +1,132 @@
+{% extends 'parts/base.html' %}
+{% load static %}
+{% block content %}
+
+  <section class="hero-wrap hero-wrap-2" style="background-image: url('{{ media_url }}images/bg_5.jpg');"
+    data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-end justify-content-center">
+        <div class="col-md-9 ftco-animate text-center mb-5">
+          <h1 class="mb-2 bread">Healthy</h1>
+          <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i
+                  class="fa fa-chevron-right"></i></a></span> <span>Healthy <i class="fa fa-chevron-right"></i></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ftco-section bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-6">
+          <div class="menu-wrap">
+            <div class="heading-menu text-center ftco-animate">
+  
+              {% if request.user %}
+  
+              {% if request.user.id %}
+              <a href="/admin/makeMeal/Healthy/DIET/" class="float-right read btn btn-warning"
+                style="font-size:12px !important;">Prepare meal</a>
+              {% endif %}
+  
+              {% endif %}
+  
+              <h3>DIET</h3>
+            </div>
+  
+            {% if diets %}
+  
+            {% for meal in diets|slice:5 %}
+            <div class="menus d-flex ftco-animate">
+              <div class="menu-img img"
+                style="background-image: url('{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}');">
+              </div>
+              <div class="text">
+                <div class="d-flex">
+                  <div class="one-half">
+                    <h3><a href="/mealDetails/{{ meal.id }}">{{ meal.name }}</a></h3>
+                  </div>
+                  <div class="one-forth">
+                    <span class="price">{{ meal.meal_type }}<br/>{{ meal.type }}</span>
+                  </div>
+                </div>
+                <p>
+  
+                  {% if meal.ingredients %}
+  
+                  {% for ingredient in meal.ingredients.all %}
+                  <span>{{ ingredient.name }}</span>,
+                  {% endfor %}
+  
+                  {% endif %}
+                </p>
+              </div>
+            </div>
+            {% endfor %}
+  
+            {% endif %}
+            <a href="/meals/Healthy/DIET/" class="float-left read btn btn-primary">More</a>
+            <span class="flat flaticon-bread" style="left: 0;"></span>
+            <span class="flat flaticon-breakfast" style="right: 0;"></span>
+          </div>
+        </div>
+  
+        <div class="col-md-6 col-lg-6">
+          <div class="menu-wrap">
+            <div class="heading-menu text-center ftco-animate">
+  
+              {% if request.user %}
+  
+              {% if request.user.id %}
+              <a href="/admin/makeMeal/Healthy/KETO/" class="float-right read btn btn-warning"
+                style="font-size:12px !important;">Prepare meal</a>
+              {% endif %}
+  
+              {% endif %}
+  
+              <h3>KETO</h3>
+            </div>
+            {% if ketos %}
+  
+            {% for meal in ketos|slice:5 %}
+            <div class="menus d-flex ftco-animate">
+              <div class="menu-img img"
+                style="background-image: url('{% if meal.image and meal.image.url %}{{ meal.image.url }}{% endif %}');">
+              </div>
+              <div class="text">
+                <div class="d-flex">
+                  <div class="one-half">
+                    <h3><a href="/mealDetails/{{ meal.id }}">{{ meal.name }}</a></h3>
+                  </div>
+                  <div class="one-forth">
+                    <span class="price">{{ meal.meal_type }}<br/>{{ meal.type }}</span>
+                  </div>
+                </div>
+                <p>
+  
+                  {% if meal.ingredients %}
+  
+                  {% for ingredient in meal.ingredients.all %}
+                  <span>{{ ingredient.name }}</span>,
+                  {% endfor %}
+  
+                  {% endif %}
+                </p>
+              </div>
+            </div>
+            {% endfor %}
+  
+            {% endif %}
+            <a href="/meals/Healthy/KETO/" class="float-left read btn btn-primary">More</a>
+            <span class="flat flaticon-pizza" style="left: 0;"></span>
+            <span class="flat flaticon-chicken" style="right: 0;"></span>
+          </div>
+        </div>
+  
+        <!--  -->
+      </div>
+  </section>
+
+  {% endblock content %}
