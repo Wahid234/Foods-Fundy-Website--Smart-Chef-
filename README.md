@@ -35,7 +35,7 @@ FoodsFundyWebsite is a smart recipe platform that:
 ## 💻 Installation
 1. Clone repository:
 ```bash
-git clone https://github.com/yourusername/FoodsFundyWebsite.git
+git clone https://github.com/Wahid234/FoodsFundyWebsite.git
 cd FoodsFundyWebsite
 ```
 ## Create virtual environment:
